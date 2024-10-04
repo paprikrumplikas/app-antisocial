@@ -1,0 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Freckle+Face&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+/* defining font. sans-serif is a fallback font */
+body {
+    font-family: 'Lato', sans-serif;
+}
+
+/* hides the scrollbar, we will use custom ones */
+.hide-scrollbar::-webkit-scrollbar {
+    display: none;
+}
