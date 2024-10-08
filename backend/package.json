@@ -15,10 +15,13 @@
     "sanity"
   ],
   "dependencies": {
+    "@sanity/cli": "^3.59.1",
+    "@sanity/studio-secrets": "^3.0.0",
     "@sanity/vision": "^3.59.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "sanity": "^3.59.0",
+    "sanity-secrets": "^0.1.0",
     "styled-components": "^6.1.8"
   },
   "devDependencies": {

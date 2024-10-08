@@ -1,16 +1,20 @@
 BACKEND
 
-1. Containts the entire Sanity config: schemas for comments, imgs. 
+1. Contains the entire Sanity config: schemas for comments, imgs. 
 @note Sanity is a Content Operating System. It helps us to create seemingly a full-stack app but a lot simpler.
 SETUP:
-    1.1. Sing up at https://www.sanity.io/javascriptmastery (with github)
+    1.1. Sign up at https://www.sanity.io/javascriptmastery (with github)
     1.2. Intall Sanity CLI globally, command at npm create sanity@latest -- --project asv5ajhw --dataset production --template clean --typescript --output-path studio-antisocial
 cd studio-antisocial
     1.3 Create first schema (@note defines what doc types and what fields in those doc types are available in the sanity studio), user.js
     1.4 Import first schema in shcemaTypes/index.ts
     1.4 run npm run dev, and in the localhost create a user and our doc is published. We basically implemented a database (in a MERN app it would take hours to do the same).
     1.5 create all the other neccessary schemas
+    1.6 @crucial create client.js to connect frontend application to Sanity backend. client.js file typically contains the configuration and setup for the Sanity client, allowing your application to interact with the Sanity Content Lake, fetch data, and perform other operations.
+        1.6.1 @crucial Token security is crucial when working with Sanity in a client-side application. The key principle is to minimize the potential for misuse if the token were to be exposed. 
+        I did not implement a solution for this
 
+@note @learning to start up Sanity Studio, navigate to the backend folder and run `npm run dev`
 
 
 
@@ -43,4 +47,8 @@ LEARNINGS:
     5. `import { GoogleLogin, googleLogout } from '@react-oauth/google';` to Login.jsx
 
 
-2. 
+2. @crucial misconception about environment variables in client-side applications:
+    1. Client-side environment variables are not secure: When you use environment variables in a client-side application (like a React app built with Vite), these variables are embedded into your JavaScript bundle during the build process. They are not truly hidden or secure.
+    2. .env files are for build-time, not runtime: In a client-side application, .env files are used by your build tool (like Vite) to replace variables in your code at build time. The actual .env file is not included in your deployed application.
+    3. @crucial Exposed in the browser: Any environment variable that starts with VITE_ (for Vite) or REACT_APP_ (for Create React App) will be included in your built JavaScript and can be viewed by anyone who inspects your application in the browser.
+    4. Visible in network tab: These "environment variables" are essentially hardcoded into your JavaScript bundle, which is sent to the user's browser. Anyone can view this in the browser's developer tools.
