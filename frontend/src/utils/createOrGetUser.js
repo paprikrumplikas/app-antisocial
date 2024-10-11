@@ -1,5 +1,5 @@
 //import jwt_decode from "jwt-decode";
-import { clientWrite } from "../src/container_ie_pages/client";
+import { clientWrite } from "../container_ie_pages/client";
 
 
 export const createOrGetUser = async (response, navigate) => {
@@ -11,9 +11,9 @@ export const createOrGetUser = async (response, navigate) => {
             headers: { Authorization: `Bearer ${access_token}` },
         });
         const userData = await userInfoResponse.json();
-        const { name, picture, sub } = userData;
+        const { name, picture, sub } = userData;    // deconstruct to get the necessary fields
 
-        // we want to create a new Sanity doc for the user
+        // we want to create a new Sanity doc for the user, so we define how it should look like
         const doc = {
             _id: sub,   // used for sanity to know which doc we are creating
             _type: "user", // used for sanity to know which doc we are creating
@@ -23,23 +23,15 @@ export const createOrGetUser = async (response, navigate) => {
 
         // using client.createIfNotExists requires use a token in the browser, which is generally a bad idea  https://www.sanity.io/help/js-client-browser-token
         // but it is ok
-        // @crucial The direct method of using client.createIfNotExists in the browser is indeed problematic because:
+        /** @crucial The direct method of using client.createIfNotExists in the browser is indeed problematic because:
         // It would require exposing a Sanity write token in your client-side code, which is a significant security risk.
         // Anyone could potentially extract this token from your JavaScript and use it to manipulate your Sanity dataset.
         // Instead, the recommended approach is to use a backend API endpoint. This method is safer because:
+        */
 
         clientWrite.createIfNotExists(doc)
             .then(() =>
                 navigate("/",))
-
-
-
-
-        // await axios.post("htttp://localhost:5173/api/auth", user)
-
-
-        // If successful, navigate and store user data
-        navigate("/");
 
         // Store user data in local storage or state management solution
         localStorage.setItem('user', JSON.stringify(userData));
