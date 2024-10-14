@@ -59,3 +59,7 @@ LEARNINGS:
     2. Use <NavLink> for navigation items that should be styled differently when active, typically in navigation menus, sidebars, or tabs.
     3. NavLink Allows you to style the link differently when it's active (i.e., when the current URL matches the link's "to" prop).
     Provides an isActive prop to its className or style prop functions, allowing for dynamic styling.
+
+
+
+
