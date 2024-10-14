@@ -47,7 +47,7 @@ export const Home = () => {
     return (
         <div className='flex bg-gray-50 md:flex-row flex-col h-screen transition-height duration-75 ease-out'>
 
-            {/** header for desktop navigation 
+            {/** sidebar for desktop navigation 
              * @note flex initial allows flex item grow but not shrink
             */}
             <div className='hidden md:flex h-screen flex flex-initial'>
@@ -55,7 +55,7 @@ export const Home = () => {
             </div>
 
 
-            {/** header for mobile */}
+            {/** header and sidebar for mobile */}
             <div className='md:hidden flex flex-row'>
                 <div className='p-2 w-full flex flex-row justify-between items-center shadow-md'>
                     <HiMenu

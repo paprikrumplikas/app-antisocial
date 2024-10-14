@@ -52,3 +52,10 @@ LEARNINGS:
     2. .env files are for build-time, not runtime: In a client-side application, .env files are used by your build tool (like Vite) to replace variables in your code at build time. The actual .env file is not included in your deployed application.
     3. @crucial Exposed in the browser: Any environment variable that starts with VITE_ (for Vite) or REACT_APP_ (for Create React App) will be included in your built JavaScript and can be viewed by anyone who inspects your application in the browser.
     4. Visible in network tab: These "environment variables" are essentially hardcoded into your JavaScript bundle, which is sent to the user's browser. Anyone can view this in the browser's developer tools.
+
+
+3. <Link> vs <NavLink>
+    1. Use <Link> for general navigation where you don't need active state management.
+    2. Use <NavLink> for navigation items that should be styled differently when active, typically in navigation menus, sidebars, or tabs.
+    3. NavLink Allows you to style the link differently when it's active (i.e., when the current URL matches the link's "to" prop).
+    Provides an isActive prop to its className or style prop functions, allowing for dynamic styling.
