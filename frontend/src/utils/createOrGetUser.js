@@ -1,5 +1,5 @@
 //import jwt_decode from "jwt-decode";
-import { clientWrite } from "../container_ie_pages/client";
+import { clientWrite } from "../client";
 
 
 export const createOrGetUser = async (response, navigate) => {

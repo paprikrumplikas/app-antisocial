@@ -61,5 +61,21 @@ LEARNINGS:
     Provides an isActive prop to its className or style prop functions, allowing for dynamic styling.
 
 
+4.   @learning @crucial StrictMode is a tool provided by React for highlighting potential problems in an application. It's a wrapper component that doesn't render any visible UI but activates additional checks and warnings for its descendants
 
+5.  // @learning The scrollRef allows you to manipulate the scroll position of this main content area programmatically. 
+    // For example, you could use it to scroll to specific elements,
+
+6. /** @syntax @learning user={user && user} syntax:
+        common JavaScript pattern used for conditional rendering. It's a shorthand way of saying "if user exists and is truthy, pass user as the prop value; otherwise, pass false"*/
+
+7.  const alreadySaved = !!(save?.filter((item) => item.postedBy._id === user.googleId)).length;
+    /**
+     * @learning @syntax
+     * e.g. 
+     * user id 1, array of ppl who saved -> returns [1]. But this is not a bool as the name suggest ->
+     * [1].length -> 1. But it is not really a bool yet. !1 = false -> !false = true. So !!1 = true
+     * e.g. 
+     * user id 4, array of ppl who saved -> returns []. Then [].length = 0. Then !!0 = false.
+     */
 

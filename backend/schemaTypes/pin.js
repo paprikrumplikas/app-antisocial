@@ -42,7 +42,7 @@ export default {
             type: "postedBy",   // @note sanity knows that this is a reference to another doc type
         },
         {
-            name: "save",
+            name: "save",   // array of ppl who saved the post
             title: "Save",
             type: "array",
             of: [{ type: "save" }], // array of type save

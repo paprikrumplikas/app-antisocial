@@ -5,9 +5,12 @@ import { Link, Route, Routes } from "react-router-dom";
 
 import { Sidebar, UserProfile } from '../components';
 import Pins from './Pins';
-import { userQuery } from '../utils/userQuery';
-import { clientRead, clientWrite } from './client';
-import logo from "../assets/logo.png"
+import { userQuery } from '../utils/dataQueries';
+import { clientRead, clientWrite } from '../client';
+import logo from "../assets/logo.png";
+
+import { fetchUser } from '../utils/fetchUser';
+
 
 export const Home = () => {
 
@@ -18,9 +21,12 @@ export const Home = () => {
     const scrollRef = useRef(null);
 
     // @learning getting userInfo from local storage. If user is undefined we clear it as that means sth went wrong, maybe user token expired
-    const userInfo = localStorage.getItem('user') !== "undefined" ? JSON.parse(localStorage.getItem('user')) : localStorage.clear();
+    // made this a util func, using that instead
+    // const userInfo = localStorage.getItem('user') !== "undefined" ? JSON.parse(localStorage.getItem('user')) : localStorage.clear();
+    const userInfo = fetchUser();
+
     console.log("userInfo ", userInfo);
-    console.log("SUB ", userInfo.sub);
+    console.log("SUB ", userInfo.sub);  // in instructors version, .googleId
 
     // getting user from sanity instead of relying on local storage. Benefits:
     // This ensures that the app is working with the most up-to-date user data from the backend.
