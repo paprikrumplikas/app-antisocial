@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 const PinDetails = () => {
     return (
@@ -6,4 +6,4 @@ const PinDetails = () => {
     )
 }
 
-export default PinDetails
+export default PinDetails;

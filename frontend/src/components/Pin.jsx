@@ -11,14 +11,13 @@ import { fetchUser } from '../utils/fetchUser.js';
 
 const Pin = ({ pin: { postedBy, image, _id, destination, save } }) => {
     const [postHovered, setPostHovered] = useState(false);
-    const [savingPost, setSavingPost] = useState(false);
     const navigate = useNavigate();
 
     const user = fetchUser();
 
     // e save is different than download. Save is like saving to own dashboard
     // the last ? is needed as if noone saved it yet, save will be null / undefined
-    const alreadySaved = !!(save?.filter((item) => item.postedBy._id === user.sub))?.length;
+    const alreadySaved = !!(save?.filter((item) => item?.postedBy?._id === user.sub))?.length;
     /**
      * @learning @syntax
      * e.g. 
@@ -30,12 +29,11 @@ const Pin = ({ pin: { postedBy, image, _id, destination, save } }) => {
 
     const savePin = (id) => {
         if (!alreadySaved) {
-            setSavingPost(true);
             // update doc on sanity db
             clientWrite
-                .patch(id)
+                .patch(id)  // patch the post with an id
                 .setIfMissing({ save: [] }) // init save to be an empty array
-                .insert('after', 'save[-1]', [{
+                .insert('after', 'save[-1]', [{ // insert a doc
                     _key: uuidv4(),
                     userId: user.sub,   // in instructors version, .googleId
                     postedBy: {
@@ -43,12 +41,18 @@ const Pin = ({ pin: { postedBy, image, _id, destination, save } }) => {
                         _ref: user.sub // in instructors version, .googleId
                     }
                 }])
-                .commit()   // returns a promise
+                .commit()   // commit, returns a promise that we can use then on with whatever
                 .then(() => {
-                    window.location.reload();
-                    setSavingPost(false);
+                    window.location.reload();   // reload window
                 })
         }
+    }
+
+
+    const deletePin = (id) => {
+        clientWrite
+            .delete(id)
+            .then(window.location.reload()) // reload window to actually remove the deleted post from the view
     }
 
     return (
@@ -57,7 +61,7 @@ const Pin = ({ pin: { postedBy, image, _id, destination, save } }) => {
             <div
                 onMouseEnter={() => setPostHovered(true)}
                 onMouseLeave={() => setPostHovered(false)}
-                onClick={() => navigate(`/pin-detail/${_id}`)}
+                onClick={() => navigate(`/pin-details/${_id}`)}
                 className='relative cursor-zoom-in w-auto hover:shadow-lg rounded-lg overflow-hidden transition-all duration-500 ease-in-out'
             >
 
@@ -69,18 +73,20 @@ const Pin = ({ pin: { postedBy, image, _id, destination, save } }) => {
                     src={urlFor(image).width(250).url()}
                 />
 
-                {/** if post is hovered, show save icon, link, etc. */}
+                {/** if post is hovered, show download icon, save button, link, delete icon */}
                 {postHovered && (
                     <div
                         className='absolute top-0 w-full h-full flex flex-col justify-between p-1 pr-2 pt-2 pb-2 z-50'  //abs removes it from normal doc flow
                         style={{ height: "100%" }} // setting manually, as instructor had some issues with h-full here
                     >
+
+                        {/** download icon */}
                         <div className='flex items-center justify-between'>
                             {/** icon, but in a div */}
                             <div className='flex gap-2'>
                                 <a
                                     href={`${image?.asset?.url}?dl=`}   // allows to download the img
-                                    downLoad    // @learning you can specify an anchor tag as download anchor tag which will automatically trigger the download
+                                    download    // @learning you can specify an anchor tag as download anchor tag which will automatically trigger the download
                                     onClick={(e) => e.stopPropagation()}  // @learning @crucial the image is behind this icon. If we didnt have this stoppropagation, then if we clicked on this download icon, we would be redirected to the pin details page
                                     className='bg-white w-9 h-9 rounded-full flex items-center justify-center text-dark text-xl opacity-75 hover:opacity-100 hover:shadow-md outline-none'
                                 >
@@ -88,12 +94,13 @@ const Pin = ({ pin: { postedBy, image, _id, destination, save } }) => {
                                 </a>
                             </div>
 
-                            {/** depending on whether the user has saved a specific post or not, render different buttons */}
+                            {/** save button. depending on whether the user has saved a specific post or not, render different buttons */}
                             {/**     // e save is different than download. Save is like saving to own dashboard */}
                             {alreadySaved ? (
                                 < button
                                     type='button'
                                     className='bg-red-500 opacity-70 hover:opacity-100 text-white font-bold px-5 py-1 text-base rounded-3xl hover:shadow-medium outline-none'
+                                    onClick={(e) => { e.stopPropagation() }}
                                 >
                                     {save?.length} Saved
                                 </button>
@@ -110,15 +117,54 @@ const Pin = ({ pin: { postedBy, image, _id, destination, save } }) => {
                                 </button>
                             )}
                         </div>
+
+                        <div className='flex justify-between items-center gap-2 w-full'>
+
+                            {/** link */}
+                            {destination && (
+                                <a
+                                    href={destination}
+                                    target="_blank" // to open in a new page
+                                    rel="noreferrer"
+                                    className='bg-white flex items-center gap-2 text-black font-bold p-2 pl-4 pr-4 rounded-full opacity-70 hover:opacity-100 hover:shadow-md'
+                                >
+                                    <BsFillArrowUpRightCircleFill />
+                                    {destination.length > 20 ? destination.slice(8, 20) : destination.slice(8)}
+                                </a>
+                            )}
+
+                            {/** delete button */}
+                            {postedBy?._id === user.sub && (
+                                <button
+                                    type='button'
+                                    className='bg-white p-2 opacity-70 hover:opacity-100 font-bold text-dark text-base rounded-3xl hover:shadow-medium outline-none'
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        deletePin();
+                                    }}
+                                >
+                                    <AiTwotoneDelete />
+                                </button>
+                            )}
+                        </div>
                     </div>
                 )}
-
             </div>
 
-
-
-
-
+            {/** link to the profile of the person who created the pin */}
+            <Link
+                to={`user-profile/${postedBy?._id}`}
+                className='flex gap-2 mt-2 items-center'
+            >
+                <img
+                    className='w-8 h-8 rounded-full object-cover'
+                    src={postedBy?.image}
+                    alt="user-profile"
+                />
+                <p className='font-semibold capitalize'>
+                    {postedBy?.userName}
+                </p>
+            </Link>
 
         </div >
     )

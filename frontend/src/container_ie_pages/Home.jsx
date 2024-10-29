@@ -3,7 +3,7 @@ import { HiMenu } from "react-icons/hi";
 import { AiFillCloseCircle } from "react-icons/ai";
 import { Link, Route, Routes } from "react-router-dom";
 
-import { Sidebar, UserProfile } from '../components';
+import { PinDetails, Sidebar, UserProfile } from '../components';
 import Pins from './Pins';
 import { userQuery } from '../utils/dataQueries';
 import { clientRead, clientWrite } from '../client';
@@ -110,6 +110,7 @@ export const Home = () => {
             <div className="pb-2 flex-1 h-screen overflow-y-scroll" ref={scrollRef}>
                 <Routes>
                     <Route path="/user-profile/:userId/" element={<userProfile />} />
+                    <Route path="/pin-details/:pinId" element={<PinDetails />} />
                     <Route path='/' element={<Pins user={user && user} />} />
                 </Routes>
             </div>

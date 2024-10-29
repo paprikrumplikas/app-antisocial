@@ -12,7 +12,8 @@ const App = () => {
   return (
     <GoogleOAuthProvider clientId={import.meta.env.VITE_APP_GOOGLE_API_TOKEN}>
       <Routes>
-        <Route path="login" element={<Login />} />
+        <Route path="/login" element={<Login />} />
+        {/** @learning catch-all route to handle nested routes within a layout component. I.e. more routes in Home */}
         <Route path="/*" element={<Home />} />
       </Routes>
     </GoogleOAuthProvider>
