@@ -14,6 +14,9 @@ const App = () => {
       <Routes>
         <Route path="/login" element={<Login />} />
         {/** @learning catch-all route to handle nested routes within a layout component. I.e. more routes in Home */}
+        {/** The * is a wildcard character that matches any path that hasn't been matched by other routes */}
+        {/** Each /* passes unmatched routes down to the next level of routing. */}
+        {/** @note there are routes defined in Home and in Pins */}
         <Route path="/*" element={<Home />} />
       </Routes>
     </GoogleOAuthProvider>

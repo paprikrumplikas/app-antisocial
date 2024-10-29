@@ -62,11 +62,11 @@ export const Home = () => {
 
 
             {/** header and sidebar for mobile */}
-            <div className='md:hidden flex flex-row'>
+            <div className='md:hidden flex flex-row bg-gray-950'>
                 <div className='p-2 w-full flex flex-row justify-between items-center shadow-md'>
                     <HiMenu
                         fontSize={40}
-                        className='cursor-pointer'
+                        className='cursor-pointer text-blue-100'
                         onClick={() => setToggleSidebar(true)}
                     />
                     <Link to="/">
@@ -107,11 +107,10 @@ export const Home = () => {
 
 
             {/** main content area that is scrollable and takes up the remaining part of the space  */}
-            <div className="pb-2 flex-1 h-screen overflow-y-scroll" ref={scrollRef}>
+            <div className="pb-2 flex-1 h-screen overflow-y-scroll bg-gray-800" ref={scrollRef}>
                 <Routes>
-                    <Route path="/user-profile/:userId/" element={<userProfile />} />
-                    <Route path="/pin-details/:pinId" element={<PinDetails />} />
-                    <Route path='/' element={<Pins user={user && user} />} />
+                    <Route path="/user-profile/:userId/" element={<UserProfile />} />
+                    <Route path='/*' element={<Pins user={user && user} />} />
                 </Routes>
             </div>
 

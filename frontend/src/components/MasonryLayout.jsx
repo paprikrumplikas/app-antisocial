@@ -7,13 +7,16 @@ const breakpointObj = {
     3000: 6,
     2000: 5,
     1200: 3,    // show 3 on 1200 pixels
-    1000: 2,
+    1000: 3,
     500: 1,
 }
 
 const MasonryLayout = ({ pins }) => {
     return (
-        <Masonry className='flex animate-slide-fwd breakpointCols={breakpointObj}'>
+        <Masonry
+            className='flex animate-slide-fwd'
+            breakpointCols={breakpointObj}
+        >
             {pins?.map((pin) =>
                 <Pin
                     key={pin._id}

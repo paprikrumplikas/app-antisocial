@@ -79,3 +79,10 @@ LEARNINGS:
      * user id 4, array of ppl who saved -> returns []. Then [].length = 0. Then !!0 = false.
      */
 
+8.      {/** @learning catch-all route to handle nested routes within a layout component. I.e. more routes in Home */}
+        {/** The * is a wildcard character that matches any path that hasn't been matched by other routes */}
+        {/** Each /* passes unmatched routes down to the next level of routing. */}
+
+9.  // @crucial @learning NavLink automatically provides the isActive bool
+
+

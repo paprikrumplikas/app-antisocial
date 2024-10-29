@@ -11,8 +11,8 @@ const Navbar = ({ searchTerm, setSearchTerm, user }) => {
 
     // else return the navbar
     return (
-        <div className='flex gap-2 md:gap-5 w-full mt-5 pb-7'>
-            <div className='flex justify-start items-center w-full px-2 rounded-lg bg-white border-none outline-none focus-within:shadow-sm'>
+        <div className='flex gap-2  w-full p-7 bg-gray-800'>
+            <div className='flex justify-start items-center w-full px-2 rounded-lg bg-blue-100 border-none outline-none focus-within:shadow-sm'>
                 <IoMdSearch
                     fontSize={21}
                     className='ml-1'
@@ -23,7 +23,7 @@ const Navbar = ({ searchTerm, setSearchTerm, user }) => {
                     placeholder="Search"
                     value={searchTerm}
                     onFocus={() => navigate("/search")}
-                    className="p-2 w-full bg-white outline-none"
+                    className="p-2 w-full outline-none bg-blue-100"
                 />
             </div>
 
@@ -41,7 +41,7 @@ const Navbar = ({ searchTerm, setSearchTerm, user }) => {
                 </Link>
                 <Link
                     to="create-pin"
-                    className='bg-black text-white rounded-lg w-12 h-12 md:w-14 md:h-12 flex justify-center items-center'
+                    className='bg-blue-200 text-black rounded-lg w-12 h-12 md:w-14 md:h-12 flex justify-center items-center'
                 >
                     <IoMdAdd />
                 </Link>

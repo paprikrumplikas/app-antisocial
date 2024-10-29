@@ -154,14 +154,14 @@ const Pin = ({ pin: { postedBy, image, _id, destination, save } }) => {
             {/** link to the profile of the person who created the pin */}
             <Link
                 to={`user-profile/${postedBy?._id}`}
-                className='flex gap-2 mt-2 items-center'
+                className='flex gap-2 mt-2 items-center pb-2'
             >
                 <img
-                    className='w-8 h-8 rounded-full object-cover'
+                    className='w-7 h-7 rounded-full object-cover'
                     src={postedBy?.image}
                     alt="user-profile"
                 />
-                <p className='font-semibold capitalize'>
+                <p className=' text-blue-100 text-md capitalize'>
                     {postedBy?.userName}
                 </p>
             </Link>
