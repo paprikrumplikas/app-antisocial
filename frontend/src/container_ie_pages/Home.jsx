@@ -88,7 +88,7 @@ export const Home = () => {
                 {toggleSideBar && (
                     <div className='fixed w-4/5 bg-white h-screen overflow-y-auto shadow-md z-10 animate-slide-in'>
                         {/* close icon*/}
-                        <div className='absolute w-full flex justify-end items-center p-2'>
+                        <div className='absolute w-full flex justify-end items-center p-2 text-blue-200 pt-4 pr-4'>
                             <AiFillCloseCircle
                                 fontSize={30}
                                 className='cursor-pointer'

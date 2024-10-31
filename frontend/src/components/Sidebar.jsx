@@ -8,7 +8,7 @@ import logo from "../assets/logo.png";
 import { categories } from '../utils/categories';
 
 const isNotActiveStyle = "flex items-center px-5 gap-3 text-gray-500 hover:text-blue-100 transition-all duration-200 ease-in-out capitalize";
-const isActiveStyle = "flex items-center text-blue-100 px-5 gap-3 font-extrabold border-r-2 border-black transition-all duration-200 ease-in-out capitalize";
+const isActiveStyle = "flex items-center text-blue-100 px-5 gap-3 font-extrabold transition-all duration-200 ease-in-out capitalize";
 
 
 
@@ -32,8 +32,8 @@ const Sidebar = ({ user, closeToggle }) => {
     }
 
     return (
-        <div className='flex flex-col justify-between bg-gray-950 h-full overflow-y-scroll min-w-210 hide-scrollbar'>
-            <div className='flex flex-col pt-2'>
+        <div className='flex flex-col justify-between bg-gradient-to-r from-gray-950 to-gray-800 h-full overflow-y-scroll min-w-210 hide-scrollbar'>
+            <div className='flex flex-col pt-2 items-center'>
                 {/** logo */}
                 <Link
                     to="/"
@@ -47,7 +47,7 @@ const Sidebar = ({ user, closeToggle }) => {
                     />
                 </Link>
 
-                <div className='flex flex-col gap-5 pt-10'>
+                <div className='flex flex-col gap-5 pt-10 items-center'>
                     <NavLink
                         to="/"
                         // @crucial @learning NavLink automatically provides the isActive bool
@@ -79,7 +79,7 @@ const Sidebar = ({ user, closeToggle }) => {
             {user && (
                 <Link
                     to={`user-profile/${user}._id`}
-                    className='flex my-5 mb-3 gap-2 p-2 items-center bg-gray-800 rounded-lg shadow-lg mx-3 px-3'
+                    className='flex my-5 mb-3 gap-2 p-2 items-center bg-gray-950 rounded-lg shadow-lg mx-3 px-3 items-center'
                     onClick={handleCloseSidebar}
                 >
                     <img

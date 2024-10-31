@@ -12,7 +12,7 @@ export const Spinner = ({ message }) => {
                 width={50}
                 className="m-5"
             />
-            <p className='text-lg text-center px-2 mt-4'>
+            <p className='text-lg text-center px-2 mt-4 text-blue-100'>
                 {message}
             </p>
         </div>
