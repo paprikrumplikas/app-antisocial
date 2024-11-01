@@ -27,10 +27,10 @@ const Navbar = ({ searchTerm, setSearchTerm, user }) => {
                 />
             </div>
 
-            {/** on bigger than medium, displays pfp and  */}
+            {/** on bigger than medium, displays pfp and create */}
             <div className='flex gap-3'>
                 <Link
-                    to={`user-profile/${user?._id}`}
+                    to={`/user-profile/${user?._id}`}
                     className='hidden md:block'
                 >
                     <img
@@ -41,9 +41,15 @@ const Navbar = ({ searchTerm, setSearchTerm, user }) => {
                 </Link>
                 <Link
                     to="create-pin"
-                    className='bg-blue-200 text-black rounded-lg w-12 h-12 md:w-14 md:h-12 flex justify-center items-center'
+                    className='sparkle-button bg-blue-200 text-black rounded-lg w-12 h-12 md:w-14 md:h-12 flex justify-center items-center relative'
                 >
                     <IoMdAdd />
+                    <span className="sparkle-container">
+                        <span className="spark spark1"></span>
+                        <span className="spark spark2"></span>
+                        <span className="spark spark3"></span>
+                        <span className="spark spark4"></span>
+                    </span>
                 </Link>
 
             </div>

@@ -17,7 +17,8 @@ const Pin = ({ pin: { postedBy, image, _id, destination, save } }) => {
 
     // e save is different than download. Save is like saving to own dashboard
     // the last ? is needed as if noone saved it yet, save will be null / undefined
-    const alreadySaved = !!(save?.filter((item) => item?.postedBy?._id === user.sub))?.length;
+    // Also add null check for user before accessing sub
+    const alreadySaved = !!(user && save?.filter((item) => item?.postedBy?._id === user?.sub))?.length;
     /**
      * @learning @syntax
      * e.g. 
@@ -28,6 +29,8 @@ const Pin = ({ pin: { postedBy, image, _id, destination, save } }) => {
      */
 
     const savePin = (id) => {
+        if (!user) return; // Add early return if no user
+
         if (!alreadySaved) {
             // update doc on sanity db
             clientWrite
@@ -134,7 +137,7 @@ const Pin = ({ pin: { postedBy, image, _id, destination, save } }) => {
                             )}
 
                             {/** delete button */}
-                            {postedBy?._id === user.sub && (
+                            {user && postedBy?._id === user?.sub && (
                                 <button
                                     type='button'
                                     className='bg-white p-2 opacity-70 hover:opacity-100 font-bold text-dark text-base rounded-3xl hover:shadow-medium outline-none'
@@ -153,7 +156,7 @@ const Pin = ({ pin: { postedBy, image, _id, destination, save } }) => {
 
             {/** link to the profile of the person who created the pin */}
             <Link
-                to={`user-profile/${postedBy?._id}`}
+                to={`/user-profile/${postedBy?._id}`}
                 className='flex gap-2 mt-2 items-center pb-2'
             >
                 <img

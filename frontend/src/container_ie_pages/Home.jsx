@@ -26,7 +26,7 @@ export const Home = () => {
     const userInfo = fetchUser();
 
     console.log("userInfo ", userInfo);
-    console.log("SUB ", userInfo.sub);  // in instructors version, .googleId
+    console.log("SUB ", userInfo?.sub);  // in instructors version, .googleId
 
     // getting user from sanity instead of relying on local storage. Benefits:
     // This ensures that the app is working with the most up-to-date user data from the backend.
@@ -34,13 +34,16 @@ export const Home = () => {
     // Security: Prevents relying solely on potentially manipulated local storage data.
     useEffect(() => {
         // defined in data.js
-        const query = userQuery(userInfo?.sub);
+        if (userInfo?.sub) {
 
-        clientRead.fetch(query)
-            .then((data) => {
-                console.log("query data ", data);
-                setUser(data[0])
-            });
+            const query = userQuery(userInfo?.sub);
+
+            clientRead.fetch(query)
+                .then((data) => {
+                    console.log("query data ", data);
+                    setUser(data[0])
+                });
+        }
     }, []);
 
 
@@ -76,7 +79,7 @@ export const Home = () => {
                             className='w-32'
                         />
                     </Link>
-                    <Link to={`user-profile/${user?._id}`}>
+                    <Link to={`/user-profile/${user?._id}`}>
                         <img
                             src={user?.image}
                             alt="pfp"

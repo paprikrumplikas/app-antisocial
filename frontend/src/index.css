@@ -14,3 +14,145 @@ body {
 .hide-scrollbar::-webkit-scrollbar {
     display: none;
 }
+
+.shine-animation {
+    opacity: 0.2;
+    transform: translateX(-100%);
+}
+
+.group:hover .shine-animation {
+    animation: shine 1.5s infinite;
+}
+
+@keyframes shine {
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+
+/* Sparkle effect with rotation */
+.sparkle-button {
+    position: relative;
+    overflow: hidden;
+}
+
+.sparkle-container {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    animation: containerRotate 8s linear infinite;
+}
+
+.spark {
+    position: absolute;
+    background: white;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    animation-duration: 1.5s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+}
+
+.spark1 {
+    top: 20%;
+    left: 20%;
+    animation-name: spark1;
+}
+
+.spark2 {
+    top: 20%;
+    right: 20%;
+    animation-name: spark2;
+}
+
+.spark3 {
+    bottom: 20%;
+    left: 20%;
+    animation-name: spark3;
+}
+
+.spark4 {
+    bottom: 20%;
+    right: 20%;
+    animation-name: spark4;
+}
+
+@keyframes containerRotate {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes spark1 {
+
+    0%,
+    100% {
+        transform: translate(0, 0) scale(0) rotate(0deg);
+        opacity: 0;
+    }
+
+    50% {
+        transform: translate(25px, 25px) scale(1) rotate(180deg);
+        opacity: 1;
+    }
+}
+
+@keyframes spark2 {
+
+    0%,
+    100% {
+        transform: translate(0, 0) scale(0) rotate(0deg);
+        opacity: 0;
+    }
+
+    50% {
+        transform: translate(-10px, 10px) scale(1) rotate(-180deg);
+        opacity: 1;
+    }
+}
+
+@keyframes spark3 {
+
+    0%,
+    100% {
+        transform: translate(0, 0) scale(0) rotate(0deg);
+        opacity: 0;
+    }
+
+    50% {
+        transform: translate(10px, -10px) scale(1) rotate(180deg);
+        opacity: 1;
+    }
+}
+
+@keyframes spark4 {
+
+    0%,
+    100% {
+        transform: translate(0, 0) scale(0) rotate(0deg);
+        opacity: 0;
+    }
+
+    50% {
+        transform: translate(-25px, -25px) scale(1) rotate(-180deg);
+        opacity: 1;
+    }
+}
+
+.spark {
+    position: absolute;
+    background: rgb(206, 62, 26);
+    /* This is tailwind's gray-800 */
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    animation-duration: 3.5s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+}

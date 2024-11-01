@@ -20,9 +20,10 @@ const PinDetails = ({ user }) => {
     const { pinId } = useParams();
 
     useEffect(() => {
-        if (imageContainerRef.current) {
-            setImageContainerHeight(imageContainerRef.current.offsetHeight);
-        }
+        setTimeout(() => {
+            const height = imageContainerRef.current.offsetHeight;
+            setImageContainerHeight(height);
+        }, 100);
     }, [pinDetails]); // Update when pinDetails changes as this might affect image container height
 
     const addComment = () => {
@@ -126,7 +127,7 @@ const PinDetails = ({ user }) => {
                                 {pinDetails.destination}
                             </a>
                             <Link
-                                to={`user-profile/${pinDetails.postedBy?._id}`}
+                                to={`/user-profile/${pinDetails.postedBy?._id}`}
                                 className='flex gap-2 mt-2 items-center rounded-ég'
                             >
                                 <img
@@ -176,9 +177,9 @@ const PinDetails = ({ user }) => {
                     </div>
 
                     {/** container for create comment */}
-                    <div className='flex flex-wrap mt-6 gap-3 items-center'>
+                    <div className='flex flex-wrap mt-10 gap-3 items-center'>
                         <Link
-                            to={`user-profile/${pinDetails.postedBy?._id}`}
+                            to={`/user-profile/${pinDetails.postedBy?._id}`}
                         >
                             <img
                                 className='w-8 h-8 rounded-full cursor-pointer'
@@ -187,7 +188,7 @@ const PinDetails = ({ user }) => {
                             />
                         </Link>
                         <input
-                            className='flex-1 bg-blue-100 border-gray-100 outline-none border-2 p-2 rounded-xl focus:border-gray-300 pl-4 mt-4'
+                            className='flex-1 bg-blue-100 border-gray-100 outline-none border-2 p-2 rounded-xl focus:border-gray-300 pl-4'
                             type="text"
                             value={comment}
                             placeholder='Add a comment'

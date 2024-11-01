@@ -16,29 +16,28 @@ export const userQuery = (userId) => {
  * 5. then in {} we specify what data we want to get back
  */
 export const searchQuery = (searchTerm) => {
-  const query = `*[_type == "pin && title match '${searchTerm}*' || category match '${searchTerm}*' || about match '${searchTerm}*'] { 
-        image {
-            asset -> {
-                url
-            }
-        },
-        _id,
-        destination,
-        postedBy -> {
-            _id,
-            userName,
-            image
-        },
-        save[] {    
-            _key, 
-            postedBy -> {
-                _id,
-                userName,
-                image
-            },
-        },
-    }`;
-
+  const query = `*[_type == "pin" && (title match "${searchTerm}*" || category match "${searchTerm}*" || about match "${searchTerm}*")] {
+      image {
+          asset-> {
+              url
+          }
+      },
+      _id,
+      destination,
+      postedBy-> {
+          _id,
+          userName,
+          image
+      },
+      save[] {    
+          _key, 
+          postedBy-> {
+              _id,
+              userName,
+              image
+          }
+      }
+  }`;
   return query;
 }
 
@@ -130,5 +129,56 @@ export const pinDetailMorePinQuery = (pin) => {
         },
       },
     }`;
+  return query;
+};
+// Current query uses userId field which might not match your schema
+export const userCreatedPinsQuery = (userId) => {
+  const query = `*[ _type == 'pin' && postedBy._ref == '${userId}'] | order(_createdAt desc){
+    image{
+      asset->{
+        url
+      }
+    },
+    _id,
+    destination,
+    postedBy->{
+      _id,
+      userName,
+      image
+    },
+    save[]{
+      postedBy->{
+        _id,
+        userName,
+        image
+      },
+    },
+  }`;
+  return query;
+};
+
+// Current query looks for userId in save array incorrectly
+export const userSavedPinsQuery = (userId) => {
+  const query = `*[_type == 'pin' && '${userId}' in save[].postedBy._ref ] | order(_createdAt desc) {
+    image{
+      asset->{
+        url
+      }
+    },
+    _id,
+    destination,
+    postedBy->{
+      _id,
+      userName,
+      image
+    },
+    save[]{
+      postedBy->{
+        _id,
+        userName,
+        image
+      },
+    },
+  }`;
   return query;
 };
