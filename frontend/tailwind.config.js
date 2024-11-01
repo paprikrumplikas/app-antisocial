@@ -5,6 +5,7 @@ module.exports = {
     extend: {
       fontFamily: {
         'freckle-face': ['"Freckle Face"', 'cursive'],
+        'stamp-act': ['"Stamp Act"', 'sans-serif'],
       },
       margin: {
         320: '320px',

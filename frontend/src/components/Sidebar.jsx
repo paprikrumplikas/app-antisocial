@@ -78,7 +78,7 @@ const Sidebar = ({ user, closeToggle }) => {
             {/** check if we have a user. If so, display image and name */}
             {user && (
                 <Link
-                    to={`user-profile/${user}._id`}
+                    to={`/user-profile/${user?._id}`}
                     className='flex my-5 mb-3 gap-2 p-2 bg-gray-950 rounded-lg shadow-lg mx-3 px-3 items-center'
                     onClick={handleCloseSidebar}
                 >

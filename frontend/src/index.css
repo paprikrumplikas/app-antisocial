@@ -156,3 +156,11 @@ body {
     animation-timing-function: ease-in-out;
     animation-iteration-count: infinite;
 }
+
+
+@font-face {
+    font-family: 'Stamp Act';
+    src: url('/assets/STAMPACT.TTF') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}

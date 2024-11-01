@@ -7,15 +7,19 @@ import { clientRead } from '../client';
 import MasonryLayout from './MasonryLayout';
 import Spinner from './Spinner';
 import { IoMdLogOut } from 'react-icons/io';
+import Sparkle from 'react-sparkle';
+
 
 
 const UserProfile = ({ }) => {
     const [user, setUser] = useState(null);
     const [pins, setPins] = useState(null);
-    const [text, setText] = useState("created"); // either created or saved
+    const [text, setText] = useState("created"); // either created or pinned
     const [activeBtn, setActiveBtn] = useState("created");
 
     const navigate = useNavigate();
+    // @note userId from the URL is Google's sub
+    // the id of the user whose profile we are visiting
     const { userId } = useParams();
 
     const randomImage = "https://picsum.photos/1600/900?grayscale";
@@ -40,19 +44,13 @@ const UserProfile = ({ }) => {
                 .then((data) => (
                     setPins(data)
                 ))
-
-            console.log("xxxxxx ", pins?.length);
-
         } else {
-            const savedPinsQuery = userSavedPinsQuery(userId);
+            const savedPinsQuery = userSavedPinsQuery(userId);  // more like pinnedPinsQuery
 
             clientRead.fetch(savedPinsQuery)
                 .then((data) => (
                     setPins(data)
                 ))
-
-            console.log("yyyyy ", pins?.length);
-
         }
     }, [text, userId])
 
@@ -73,7 +71,7 @@ const UserProfile = ({ }) => {
         <div className='relative pb-2 h-full justify-center items-center'>
             <div className='flex flex-col pb-5'>
                 <div className='relative flex flex-col mb-7'>
-                    <div className='flex flex-col justify-center items-center px-8 pt-8'>
+                    <div className='flex flex-col justify-center items-center px-8 pt-8 relative'>
                         <img
                             src={randomImage}
                             alt="banner"
@@ -84,11 +82,12 @@ const UserProfile = ({ }) => {
                             alt="profilepic"
                             className='rounded-full w-30 h-30 -mt-16 border-[15px] border-gray-800'
                         />
+                        <p className='text-gray-800 font-stamp-act font-bold xl:text-[128px] lg:text-[90px] md:text-[75px] sm:text-[50px] text-[25px] mb-16 absolute'>BAD FOLK</p>
                         <h1 className='font-bold text-2xl text-blue-100'>
                             {user.userName}
                         </h1>
                         <div className='absolute top-0 z-1 right-0 p-3'>
-                            {userId === user._id && (
+                            {localStorage.getItem('user') && JSON.parse(localStorage.getItem('user')).sub === userId && (
                                 <button
                                     onClick={() => { handleLogout() }}
                                     type='button'
@@ -104,9 +103,9 @@ const UserProfile = ({ }) => {
                     {/** switch button */}
                     <div className='text-center my-7'>
                         <button
-                            tpye="button"
-                            onClick={(e) => {
-                                setText(e.target.textContent);
+                            type="button"
+                            onClick={() => {
+                                setText("created");
                                 setActiveBtn("created");
                             }}
                             className={`rounded-l-full ${activeBtn === "created" ? activeBtnStyles : notActiveBtnStyles}`}
@@ -114,14 +113,14 @@ const UserProfile = ({ }) => {
                             Created
                         </button>
                         <button
-                            tpye="button"
-                            onClick={(e) => {
-                                setText(e.target.textContent);
-                                setActiveBtn("saved");
+                            type="button"
+                            onClick={() => {
+                                setText("pinned");
+                                setActiveBtn("pinned");
                             }}
-                            className={`rounded-r-full ${activeBtn === "saved" ? activeBtnStyles : notActiveBtnStyles}`}
+                            className={`rounded-r-full ${activeBtn === "pinned" ? activeBtnStyles : notActiveBtnStyles}`}
                         >
-                            Saved
+                            Pinned
                         </button>
                     </div>
 
@@ -130,18 +129,28 @@ const UserProfile = ({ }) => {
                         <div className='px-7'>
                             {activeBtn === "created" ? (
                                 <div className='text-center text-blue-100 pb-4 mx-7 font-bold'>
-                                    Here are the pins you created. Apparently, you have been slouching in front of the computer instead of touching some grass.
+                                    You have been a BAD FOLK. You were creating posts, slouching in front of the computer instead of touching some grass.
                                 </div>
                             ) : (
                                 <div className='text-center text-blue-100 pb-4 mx-7 font-bold'>
-                                    Here are the pins you created. Apparently, you have been doom-scrolling the whole day instead of touching some grass.
+                                    You have been a BAD FOLK. You were pinning aorund, doom-scrolling the whole day instead of touching some grass.
                                 </div>
                             )}
                             <MasonryLayout pins={pins} />
                         </div>
                     ) : (
-                        <div className='text-center text-blue-100 pb-4 mx-7 font-bold'>
-                            No pins found. Good job, keep it that way. Go enjoy life, go touch some grass.
+                        <div className='text-center text-blue-100 pb-4 mx-7 font-bold relative'>
+                            No pins found. Good job, keep it that way. Keep enjoying life, go touch some grass.
+                            <Sparkle
+                                color="white"
+                                count={7}
+                                minSize={7}
+                                maxSize={18}
+                                fadeOutSpeed={7}
+                                flicker={false}
+                                overlayColor="transparent"
+                                style={{ position: 'absolute', top: 0, left: 0, width: '50%', height: '50%' }}
+                            />
                         </div>
                     )
                     }

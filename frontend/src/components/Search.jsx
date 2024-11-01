@@ -6,6 +6,9 @@ import Spinner from './Spinner';
 import { searchQuery } from '../utils/dataQueries';
 import { comment } from 'postcss';
 
+import grassImage from '../assets/grass.jpg';
+
+
 const Search = ({ searchTerm }) => {
 
     const [pins, setPins] = useState(null);
@@ -30,13 +33,21 @@ const Search = ({ searchTerm }) => {
 
 
     return (
-        <div className='flex pl-5 text-blue-100'>
+        <div className='flex px-5 w-full'>
             {isLoading ? (
                 <Spinner />
             ) : pins?.length ? (
                 <MasonryLayout pins={pins} />
             ) : (
-                <div>No hits. Wanna touch some grass instead?</div>
+                <div className='flex flex-col text-white items-center justify-center w-full pt-8'>
+                    <p className='pb-3 text-lg'>Nothing to see here.</p>
+                    <p className='font-bold text-2xl pb-10'>Wanna touch some grass instead?</p>
+                    <img
+                        src={grassImage}
+                        alt="grass"
+                        className='xl:w-3/6 w-full rounded-3xl'
+                    />
+                </div>
             )}
         </div>
     );

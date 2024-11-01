@@ -116,7 +116,7 @@ const Pin = ({ pin: { postedBy, image, _id, destination, save } }) => {
                                         savePin(_id);
                                     }}
                                 >
-                                    Save
+                                    Pin
                                 </button>
                             )}
                         </div>
