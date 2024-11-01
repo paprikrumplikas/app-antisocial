@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink, Link } from 'react-router-dom';
 
 import { RiHomeFill } from "react-icons/ri";
-import { IoIosArrowForward } from "react-icons/io";
+import { IoIosArrowForward, IoMdAdd } from "react-icons/io";
 
 import logo from "../assets/logo.png";
 import { categories } from '../utils/categories';
@@ -57,7 +57,19 @@ const Sidebar = ({ user, closeToggle }) => {
                         <RiHomeFill />
                         Home
                     </NavLink>
-                    <h3 className='mt-2 px-5 pt-4 text-base text-blue-100 2xl:text-xl'>
+
+                    <NavLink
+                        to="/create-pin"
+                        className={({ isActive }) => isActive ? isActiveStyle : isNotActiveStyle}
+                        onClick={handleCloseSidebar}
+                    >
+                        <IoMdAdd />
+                        Create Pin
+                        <IoMdAdd />
+                    </NavLink>
+
+
+                    <h3 className='mt-4 px-5 pt-4 text-base text-blue-100 2xl:text-xl'>
                         Discover categories
                     </h3>
 
@@ -69,9 +81,16 @@ const Sidebar = ({ user, closeToggle }) => {
                             onClick={handleCloseSidebar}
                             key={category.name}
                         >
+                            <img
+                                src={category.image}
+                                alt={category.name}
+                                className='w-6 h-6 rounded-full'
+                            />
                             {category.name}
                         </NavLink>
                     ))}
+
+
                 </div>
             </div>
 

@@ -3,7 +3,7 @@ import Masonry from "react-masonry-css";
 import Pin from "./Pin";
 
 const getColumnsForWidth = (width) => {
-    if (width < 500) return 2;
+    if (width < 500) return 1;
     if (width < 800) return 3;
     if (width < 1200) return 4;
     if (width < 1600) return 5;

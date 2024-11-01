@@ -6,6 +6,8 @@ import { searchQuery, feedQuery } from '../utils/dataQueries.js';
 import MasonryLayout from "./MasonryLayout.jsx";
 import Spinner from "./Spinner.jsx";
 
+import grassImage from '../assets/grass.jpg';
+
 const Feed = () => {
 
     const [isLoading, setIsLoading] = useState(false);
@@ -39,6 +41,20 @@ const Feed = () => {
 
 
     if (isLoading) return <Spinner message="We are adding new ideas to your feed!" />
+
+    if (pins?.length === 0) {
+        return (
+            <div className='flex flex-col text-white items-center justify-center w-full pt-8'>
+                <p className='pb-3 text-lg'>Nothing to see here.</p>
+                <p className='font-bold text-2xl pb-10'>Wanna touch some grass instead?</p>
+                <img
+                    src={grassImage}
+                    alt="grass"
+                    className='xl:w-3/6 w-full rounded-3xl'
+                />
+            </div>
+        )
+    }
 
     return (
         <div>

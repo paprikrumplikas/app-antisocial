@@ -1,15 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Routes, Route } from "react-router-dom";
 
-import { Navbar, Feed, PinDetails, CreatePin, Search } from '../components';
+import { Navbar, Feed, PinDetails, CreatePin, Search, Busted } from '../components';
 
 const Pins = ({ user }) => {
 
     // @note we create this state here and not in Search as we need to share it across diff components
     const [searchTerm, setSearchTerm] = useState("");
+    const [showBusted, setShowBusted] = useState(false);
+
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setShowBusted(true);
+        }, 1000); // 30 seconds
+
+        return () => clearTimeout(timer);
+    }, []); // Run once when component mount
+
 
     return (
         <div className=' bg-gray-800'>
+            {showBusted && <Busted onClose={() => setShowBusted(false)} />} {/* Changed to conditional rendering */}
             <div className='bg-blue-200'>
                 <Navbar
                     searchTerm={searchTerm}

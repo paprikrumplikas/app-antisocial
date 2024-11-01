@@ -102,7 +102,7 @@ const CreatePin = ({ user }) => {
                                         </p>
                                         <p className='text-lg'>Click to upload.</p>
                                     </div>
-                                    <p className='mt-32 text-gray-700'>
+                                    <p className='mt-32 text-gray-700 text-center'>
                                         Use high-quality JPG, SVG, PNG, GIF, or TIFF less than 20 MB.
                                     </p>
                                 </div>

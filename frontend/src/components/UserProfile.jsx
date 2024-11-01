@@ -9,6 +9,9 @@ import Spinner from './Spinner';
 import { IoMdLogOut } from 'react-icons/io';
 import Sparkle from 'react-sparkle';
 
+import busted from '../assets/busted2.png';
+
+
 
 
 const UserProfile = ({ }) => {
@@ -82,7 +85,9 @@ const UserProfile = ({ }) => {
                             alt="profilepic"
                             className='rounded-full w-30 h-30 -mt-16 border-[15px] border-gray-800'
                         />
-                        <p className='text-gray-800 font-stamp-act font-bold xl:text-[128px] lg:text-[90px] md:text-[75px] sm:text-[50px] text-[25px] mb-16 absolute'>BAD FOLK</p>
+                        {pins?.length > 0 &&
+                            <p className='text-gray-800 font-bold xl:text-[128px] lg:text-[90px] md:text-[75px] sm:text-[50px] text-[25px] mb-16 absolute'>BAD FOLK</p>
+                        }
                         <h1 className='font-bold text-2xl text-blue-100'>
                             {user.userName}
                         </h1>
@@ -128,13 +133,17 @@ const UserProfile = ({ }) => {
                     {pins?.length ? (
                         <div className='px-7'>
                             {activeBtn === "created" ? (
-                                <div className='text-center text-blue-100 pb-4 mx-7 font-bold'>
-                                    You have been a BAD FOLK. You were creating posts, slouching in front of the computer instead of touching some grass.
-                                </div>
+                                localStorage.getItem('user') && JSON.parse(localStorage.getItem('user')).sub === userId && (
+                                    <div className='text-center text-blue-100 pb-4 mx-7 font-bold'>
+                                        You have been a BAD FOLK. You were creating posts, slouching in front of the computer instead of touching some grass.
+                                    </div>
+                                )
                             ) : (
-                                <div className='text-center text-blue-100 pb-4 mx-7 font-bold'>
-                                    You have been a BAD FOLK. You were pinning aorund, doom-scrolling the whole day instead of touching some grass.
-                                </div>
+                                localStorage.getItem('user') && JSON.parse(localStorage.getItem('user')).sub === userId && (
+                                    <div className='text-center text-blue-100 pb-4 mx-7 font-bold'>
+                                        You have been a BAD FOLK. You were pinning aorund, doom-scrolling the whole day instead of touching some grass.
+                                    </div>
+                                )
                             )}
                             <MasonryLayout pins={pins} />
                         </div>
