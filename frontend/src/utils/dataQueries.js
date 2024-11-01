@@ -1,10 +1,10 @@
 // to fetch sanity data
 
 export const userQuery = (userId) => {
-    // try to get me a doc of type == user and id == userId
-    const query = `*[_type == "user" && _id== "${userId}"]`;
+  // try to get me a doc of type == user and id == userId
+  const query = `*[_type == "user" && _id== "${userId}"]`;
 
-    return query;
+  return query;
 }
 
 // @note @learning @crucial Sanity uses GROQ language for querying. Similar to grafGQ
@@ -16,7 +16,7 @@ export const userQuery = (userId) => {
  * 5. then in {} we specify what data we want to get back
  */
 export const searchQuery = (searchTerm) => {
-    const query = `*[_type == "pin && title match '${searchTerm}*' || category match '${searchTerm}*' || about match '${searchTerm}*'] { 
+  const query = `*[_type == "pin && title match '${searchTerm}*' || category match '${searchTerm}*' || about match '${searchTerm}*'] { 
         image {
             asset -> {
                 url
@@ -39,7 +39,7 @@ export const searchQuery = (searchTerm) => {
         },
     }`;
 
-    return query;
+  return query;
 }
 
 
@@ -69,7 +69,7 @@ export const feedQuery = `*[_type == "pin"] | order(_createdAt desc) {
 
 
 export const pinDetailQuery = (pinId) => {
-    const query = `*[_type == "pin" && _id == '${pinId}']{
+  const query = `*[_type == "pin" && _id == '${pinId}']{
       image{
         asset->{
           url
@@ -102,11 +102,13 @@ export const pinDetailQuery = (pinId) => {
         },
       }
     }`;
-    return query;
+  return query;
 };
 
 export const pinDetailMorePinQuery = (pin) => {
-    const query = `*[_type == "pin" && category == '${pin.category}' && _id != '${pin._id}' ]{
+  // taken out the filtering from the query to get more pins
+  // && category == '${pin.category}'
+  const query = `*[_type == "pin"  && _id != '${pin._id}' ]{
       image{
         asset->{
           url
@@ -128,5 +130,5 @@ export const pinDetailMorePinQuery = (pin) => {
         },
       },
     }`;
-    return query;
+  return query;
 };

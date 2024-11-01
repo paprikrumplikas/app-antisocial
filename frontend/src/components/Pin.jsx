@@ -66,7 +66,7 @@ const Pin = ({ pin: { postedBy, image, _id, destination, save } }) => {
             >
 
                 <img
-                    className='rounded-lg w-full'
+                    className='rounded-xl w-full'
                     alt="user-post"
                     // src: this is Sanity's way of effectively fetching images. 
                     // Imgs will be optimized for this specific width
