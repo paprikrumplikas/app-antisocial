@@ -16,10 +16,10 @@ const Busted = ({ onClose }) => {
                     alt="Busted!"
                     className='w-full h-auto mb-4'
                 />
-                <p className='text-xl font-bold text-center text-red-500'>
+                <p className='text-center text-gray-800 text-lg mt-2'>
                     You've been caught procrastinating!
                 </p>
-                <p className='text-center text-gray-800 text-lg mt-2'>
+                <p className='text-xl font-bold text-center text-red-500'>
                     Time to touch some grass...
                 </p>
             </div>

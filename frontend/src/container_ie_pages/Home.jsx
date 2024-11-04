@@ -3,10 +3,10 @@ import { HiMenu } from "react-icons/hi";
 import { AiFillCloseCircle } from "react-icons/ai";
 import { Link, Route, Routes } from "react-router-dom";
 
-import { PinDetails, Sidebar, UserProfile } from '../components';
+import { Sidebar, UserProfile } from '../components';
 import Pins from './Pins';
 import { userQuery } from '../utils/dataQueries';
-import { clientRead, clientWrite } from '../client';
+import { clientRead } from '../client';
 import logo from "../assets/logo.png";
 
 import { fetchUser } from '../utils/fetchUser';
@@ -25,8 +25,8 @@ export const Home = () => {
     // const userInfo = localStorage.getItem('user') !== "undefined" ? JSON.parse(localStorage.getItem('user')) : localStorage.clear();
     const userInfo = fetchUser();
 
-    console.log("userInfo ", userInfo);
-    console.log("SUB ", userInfo?.sub);  // in instructors version, .googleId
+    //console.log("userInfo ", userInfo);
+    //console.log("SUB ", userInfo?.sub);  // in instructors version, .googleId
 
     // getting user from sanity instead of relying on local storage. Benefits:
     // This ensures that the app is working with the most up-to-date user data from the backend.

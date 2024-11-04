@@ -11,8 +11,14 @@ body {
 }
 
 /* hides the scrollbar, we will use custom ones */
+.hide-scrollbar {
+    scrollbar-width: none;
+    /* Firefox */
+}
+
 .hide-scrollbar::-webkit-scrollbar {
     display: none;
+    /* Chrome, Safari, Edge */
 }
 
 .shine-animation {

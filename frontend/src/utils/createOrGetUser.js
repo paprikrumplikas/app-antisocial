@@ -29,9 +29,9 @@ export const createOrGetUser = async (response, navigate) => {
         // Instead, the recommended approach is to use a backend API endpoint. This method is safer because:
         */
 
-        clientWrite.createIfNotExists(doc)
-            .then(() =>
-                navigate("/",))
+        await clientWrite.createIfNotExists(doc)
+            .then(() => (navigate("/")
+            ))
 
         // Store user data in local storage or state management solution
         localStorage.setItem('user', JSON.stringify(userData));

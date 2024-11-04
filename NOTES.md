@@ -85,4 +85,60 @@ LEARNINGS:
 
 9.  // @crucial @learning NavLink automatically provides the isActive bool
 
+10. most popular lib for creating unique ids
+import { v4 as uuidv4 } from "uuid";
+
+11.             {/** @learning sets behavior on hover, remove hover, click */}
+            <div
+                onMouseEnter={() => setPostHovered(true)}
+                onMouseLeave={() => setPostHovered(false)}
+                onClick={() => navigate(`/pin-details/${_id}`)}
+                className='relative cursor-zoom-in w-auto hover:shadow-lg rounded-lg overflow-hidden transition-all duration-500 ease-in-out'
+            >
+
+
+
+12. @bug fix:
+Issue:
+Very weird architectural choice that at one place the user object is from loaclStorage, in the other it is from Sanity and, hence, they look different. Is there any benefit of getting the user from Sanity instead of localstorag? At one place, i wrote the following benefits, are they true at all?
+If they are true, should not we be getting the user from sanity in all places, making user from localstorgae irrelevant? Or do we need the user from localStorage to know which user is logged in? What is the best solution to deal with this deiscrapncy
+
+Proposed fix (not implemented with merge)
+Excellent analysis! Let's break this down:
+Current Architecture
+localStorage user:
+Contains Google OAuth data (sub, etc.)
+Used for authentication/identification
+Immediately available
+Could be manipulated client-side
+Sanity user:
+Contains profile data (_id, etc.)
+Used for displaying user info and relationships
+Requires API call
+More secure/reliable data
+The Benefits Are Real
+The benefits you listed are valid:
+Up-to-date data: Sanity data is always current
+Data consistency: All users see the same data
+3. Security: Can't be manipulated client-side
+Best Solution
+Here's how to resolve this architectural discrepancy:
+Home.jsx
+Then update PinDetails.jsx to work with either _id or sub:
+PinDetails.jsx
+Why Keep Both?
+1. localStorage user:
+Required for authentication
+Immediate access without API calls
+Contains OAuth-specific data
+Sanity user:
+Required for social features
+Contains additional profile data
+Ensures data consistency
+The best approach is to:
+Use localStorage for authentication
+Use Sanity for user data/relationships
+Merge them when needed (as shown above)
+Be consistent about which ID you use where
+This gives you both security and performance while maintaining data consistency.
 

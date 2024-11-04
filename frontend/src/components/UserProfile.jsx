@@ -6,7 +6,6 @@ import { userCreatedPinsQuery, userQuery, userSavedPinsQuery } from "../utils/da
 import { clientRead } from '../client';
 import MasonryLayout from './MasonryLayout';
 import Spinner from './Spinner';
-import { IoMdLogOut } from 'react-icons/io';
 import Sparkle from 'react-sparkle';
 
 import busted from '../assets/busted2.png';
@@ -135,13 +134,13 @@ const UserProfile = ({ }) => {
                             {activeBtn === "created" ? (
                                 localStorage.getItem('user') && JSON.parse(localStorage.getItem('user')).sub === userId && (
                                     <div className='text-center text-blue-100 pb-4 mx-7 font-bold'>
-                                        You have been a BAD FOLK. You were creating posts, slouching in front of the computer instead of touching some grass.
+                                        You have been a BAD FOLK. You were creating posts and slouching in front of the computer instead of touching some grass.
                                     </div>
                                 )
                             ) : (
                                 localStorage.getItem('user') && JSON.parse(localStorage.getItem('user')).sub === userId && (
                                     <div className='text-center text-blue-100 pb-4 mx-7 font-bold'>
-                                        You have been a BAD FOLK. You were pinning aorund, doom-scrolling the whole day instead of touching some grass.
+                                        You have been a BAD FOLK. You were pinning aorund and doom-scrolling the whole day instead of touching some grass.
                                     </div>
                                 )
                             )}

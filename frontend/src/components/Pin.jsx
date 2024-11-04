@@ -8,32 +8,38 @@ import { BsFillArrowUpRightCircleFill } from "react-icons/bs";
 
 import { clientRead, clientWrite, urlFor } from "../client.js";
 import { fetchUser } from '../utils/fetchUser.js';
+//import { savePin, deletePin } from '../utils/saveOrDeletePin.js';
 
+// @note rendered by MasonryLayout
 const Pin = ({ pin: { postedBy, image, _id, destination, save } }) => {
     const [postHovered, setPostHovered] = useState(false);
     const navigate = useNavigate();
 
     const user = fetchUser();
+    console.log("user object fetched from localsotrage looks like this: ", user);
 
     // e save is different than download. Save is like saving to own dashboard
     // the last ? is needed as if noone saved it yet, save will be null / undefined
     // Also add null check for user before accessing sub
-    const alreadySaved = !!(user && save?.filter((item) => item?.postedBy?._id === user?.sub))?.length;
     /**
-     * @learning @syntax
-     * e.g. 
-     * user id 1, array of ppl who saved -> returns [1]. But this is not a bool as the name suggest ->
-     * [1].length -> 1. But it is not really a bool yet. !1 = false -> !false = true. So !!1 = true
-     * e.g. 
-     * user id 4, array of ppl who saved -> returns []. Then [].length = 0. Then !!0 = false.
-     */
+      * @learning @syntax
+         * e.g. 
+         * user id 1, array of ppl who saved -> returns [1]. But this is not a bool as the name suggest ->
+         * [1].length -> 1. But it is not really a bool yet. !1 = false -> !false = true. So !!1 = true
+         * e.g. 
+         * user id 4, array of ppl who saved -> returns []. Then [].length = 0. Then !!0 = false.
+        */
+    // @note item is a user in the array of users who pinned the post
+    const alreadySaved = !!(user && save?.filter((item) => item?.postedBy?._id === user?.sub))?.length;
 
-    const savePin = (id) => {
+
+    // @note moved these 2 to a util file (without reload that has to be handled here)
+    const savePin = async (id) => {
         if (!user) return; // Add early return if no user
 
         if (!alreadySaved) {
             // update doc on sanity db
-            clientWrite
+            await clientWrite
                 .patch(id)  // patch the post with an id
                 .setIfMissing({ save: [] }) // init save to be an empty array
                 .insert('after', 'save[-1]', [{ // insert a doc
@@ -47,7 +53,11 @@ const Pin = ({ pin: { postedBy, image, _id, destination, save } }) => {
                 .commit()   // commit, returns a promise that we can use then on with whatever
                 .then(() => {
                     window.location.reload();   // reload window
+                    console.log("You have successfully pinned this post.")
                 })
+                .catch((error) => {
+                    console.error('Error saving pin:', error);
+                });
         }
     }
 
@@ -55,12 +65,17 @@ const Pin = ({ pin: { postedBy, image, _id, destination, save } }) => {
     const deletePin = (id) => {
         clientWrite
             .delete(id)
-            .then(window.location.reload()) // reload window to actually remove the deleted post from the view
+            .then(() => {
+                window.location.reload(); // Now this will execute after deletion is complete
+            })
+            .catch((error) => {
+                console.error('Error deleting pin:', error);
+            });
     }
 
     return (
         <div className='m-2'>
-            {/** @learning sets behavior on hover, remove hover, click */}
+            {/** @learning @crucial sets behavior on hover, remove hover, click */}
             <div
                 onMouseEnter={() => setPostHovered(true)}
                 onMouseLeave={() => setPostHovered(false)}
@@ -91,33 +106,48 @@ const Pin = ({ pin: { postedBy, image, _id, destination, save } }) => {
                                     href={`${image?.asset?.url}?dl=`}   // allows to download the img
                                     download    // @learning you can specify an anchor tag as download anchor tag which will automatically trigger the download
                                     onClick={(e) => e.stopPropagation()}  // @learning @crucial the image is behind this icon. If we didnt have this stoppropagation, then if we clicked on this download icon, we would be redirected to the pin details page
-                                    className='bg-white w-9 h-9 rounded-full flex items-center justify-center text-dark text-xl opacity-75 hover:opacity-100 hover:shadow-md outline-none'
+                                    className='flex bg-white rounded-full items-center justify-center text-dark opacity-75 hover:opacity-100 hover:shadow-md outline-none'
                                 >
-                                    <MdDownloadForOffline />
+                                    <div className='flex text-3xl font-bold items-center justify-center'>
+                                        <MdDownloadForOffline />
+                                    </div>
                                 </a>
                             </div>
 
-                            {/** save button. depending on whether the user has saved a specific post or not, render different buttons */}
-                            {/**     // e save is different than download. Save is like saving to own dashboard */}
+                            {/** pin button. depending on whether the user has pinned a specific post or not, render different buttons */}
+                            {/**     // e save is different than download. Save is like pinning to own dashboard */}
                             {alreadySaved ? (
                                 < button
                                     type='button'
                                     className='bg-red-500 opacity-70 hover:opacity-100 text-white font-bold px-5 py-1 text-base rounded-3xl hover:shadow-medium outline-none'
                                     onClick={(e) => { e.stopPropagation() }}
                                 >
-                                    {save?.length} Saved
+                                    {save?.length} pinned
                                 </button>
                             ) : (
-                                <button
-                                    type='button'
-                                    className='bg-red-500 opacity-70 hover:opacity-100 text-white font-bold px-5 py-1 text-base rounded-3xl hover:shadow-medium outline-none'
-                                    onClick={(e) => {
-                                        e.stopPropagation();
-                                        savePin(_id);
-                                    }}
-                                >
-                                    Pin
-                                </button>
+                                (user ? (
+                                    <button
+                                        type='button'
+                                        className='bg-red-500 opacity-70 hover:opacity-100 text-white font-bold px-5 py-1 text-base rounded-3xl hover:shadow-medium outline-none'
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            savePin(_id)
+                                        }}
+                                    >
+                                        Pin
+                                    </button>
+                                ) : (
+                                    <button
+                                        type='button'
+                                        className='bg-red-500 opacity-70 hover:opacity-100 text-white font-bold px-5 py-1 text-base rounded-3xl hover:shadow-medium outline-none'
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            navigate("/login");
+                                        }}
+                                    >
+                                        Pin
+                                    </button>
+                                ))
                             )}
                         </div>
 
@@ -129,7 +159,7 @@ const Pin = ({ pin: { postedBy, image, _id, destination, save } }) => {
                                     href={destination}
                                     target="_blank" // to open in a new page
                                     rel="noreferrer"
-                                    className='bg-white flex items-center gap-2 text-black font-bold p-2 pl-4 pr-4 rounded-full opacity-70 hover:opacity-100 hover:shadow-md'
+                                    className='bg-white flex items-center gap-2 text-black font-bold py-1 px-4 rounded-full opacity-70 hover:opacity-100 hover:shadow-md'
                                 >
                                     <BsFillArrowUpRightCircleFill />
                                     {destination.length > 20 ? destination.slice(8, 20) : destination.slice(8)}
@@ -140,13 +170,15 @@ const Pin = ({ pin: { postedBy, image, _id, destination, save } }) => {
                             {user && postedBy?._id === user?.sub && (
                                 <button
                                     type='button'
-                                    className='bg-white p-2 opacity-70 hover:opacity-100 font-bold text-dark text-base rounded-3xl hover:shadow-medium outline-none'
+                                    className='bg-white p-1 opacity-70 hover:opacity-100 font-bold text-dark text-base rounded-3xl hover:shadow-medium outline-none'
                                     onClick={(e) => {
                                         e.stopPropagation();
-                                        deletePin();
+                                        deletePin(_id);
                                     }}
                                 >
-                                    <AiTwotoneDelete />
+                                    <div className='text-2xl '>
+                                        <AiTwotoneDelete />
+                                    </div>
                                 </button>
                             )}
                         </div>

@@ -2,14 +2,14 @@ import React from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import { IoMdAdd, IoMdSearch } from "react-icons/io";
 
+import login from "../assets/login.png";
+
 
 
 const Navbar = ({ searchTerm, setSearchTerm, user }) => {
 
     const navigate = useNavigate();
 
-    // if there is no user, dont display anything
-    if (!user) return null;
 
     // else return the navbar
     return (
@@ -31,16 +31,31 @@ const Navbar = ({ searchTerm, setSearchTerm, user }) => {
 
             {/** on bigger than medium, displays pfp and create */}
             <div className='flex gap-3'>
-                <Link
-                    to={`/user-profile/${user?._id}`}
-                    className='hidden md:block'
-                >
-                    <img
-                        src={user.image}
-                        alt="user"
-                        className='w-14 h-12 rounded-lg'
-                    />
-                </Link>
+                {user ? (
+                    <Link
+                        to={`/user-profile/${user?._id}`}
+                        className='hidden md:block'
+                    >
+                        <img
+                            src={user.image}
+                            alt="user"
+                            className='w-14 h-12 rounded-lg'
+                        />
+                    </Link>
+                ) : (
+                    <Link
+                        to={`/login`}
+                        className='hidden md:block'
+                    >
+                        <img
+                            src={login}
+                            alt="user"
+                            className='w-14 h-12 rounded-lg'
+                        />
+                    </Link>
+                )
+
+                }
                 <Link
                     to="create-pin"
                     className='sparkle-button bg-blue-200 text-black rounded-lg w-12 h-12 md:w-14 md:h-12 flex justify-center items-center relative'
