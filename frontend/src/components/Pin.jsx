@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from "uuid";
 import { MdDownloadForOffline } from "react-icons/md";
 import { AiTwotoneDelete } from "react-icons/ai";
 import { BsFillArrowUpRightCircleFill } from "react-icons/bs";
+import { toast } from 'react-toastify';
 
 import { clientRead, clientWrite, urlFor } from "../client.js";
 import { fetchUser } from '../utils/fetchUser.js';
@@ -34,7 +35,12 @@ const Pin = ({ pin: { postedBy, image, _id, destination, save } }) => {
 
     // @note moved these 2 to a util file (without reload that has to be handled here)
     const savePin = async (id) => {
-        if (!user) return; // Add early return if no user
+        if (!user) {
+            toast.error('Please login to pin posts to your profile.\n\n(See the buttons in the top right or bottom left corners.)', {
+                style: { whiteSpace: 'pre-line' }
+            });
+            return; // Add early return if no user
+        }
 
         if (!alreadySaved) {
             // update doc on sanity db
@@ -124,29 +130,16 @@ const Pin = ({ pin: { postedBy, image, _id, destination, save } }) => {
                                     {save?.length} pinned
                                 </button>
                             ) : (
-                                (user ? (
-                                    <button
-                                        type='button'
-                                        className='bg-red-500 opacity-70 hover:opacity-100 text-white font-bold px-5 py-1 text-base rounded-3xl hover:shadow-medium outline-none'
-                                        onClick={(e) => {
-                                            e.stopPropagation();
-                                            savePin(_id)
-                                        }}
-                                    >
-                                        Pin
-                                    </button>
-                                ) : (
-                                    <button
-                                        type='button'
-                                        className='bg-red-500 opacity-70 hover:opacity-100 text-white font-bold px-5 py-1 text-base rounded-3xl hover:shadow-medium outline-none'
-                                        onClick={(e) => {
-                                            e.stopPropagation();
-                                            navigate("/login");
-                                        }}
-                                    >
-                                        Pin
-                                    </button>
-                                ))
+                                <button
+                                    type='button'
+                                    className='bg-red-500 opacity-70 hover:opacity-100 text-white font-bold px-5 py-1 text-base rounded-3xl hover:shadow-medium outline-none'
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        savePin(_id)
+                                    }}
+                                >
+                                    Pin
+                                </button>
                             )}
                         </div>
 

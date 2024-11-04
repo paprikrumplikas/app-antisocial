@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import { IoMdAdd, IoMdSearch } from "react-icons/io";
+import { toast } from 'react-toastify';
+
 
 import login from "../assets/login.png";
 
@@ -9,6 +11,19 @@ import login from "../assets/login.png";
 const Navbar = ({ searchTerm, setSearchTerm, user }) => {
 
     const navigate = useNavigate();
+
+
+    const handleCreatePinClick = (e) => {
+        e.preventDefault();
+        if (!user) {
+            toast.error('Please login to create pins.\n\n(See the buttons in the top right or bottom left corners.)', {
+                style: { whiteSpace: 'pre-line' }
+            });
+            return;
+        }
+        navigate('/create-pin');
+        if (closeToggle) closeToggle(false);
+    }
 
 
     // else return the navbar
@@ -59,6 +74,7 @@ const Navbar = ({ searchTerm, setSearchTerm, user }) => {
                 <Link
                     to="create-pin"
                     className='sparkle-button bg-blue-200 text-black rounded-lg w-12 h-12 md:w-14 md:h-12 flex justify-center items-center relative'
+                    onClick={handleCreatePinClick}
                 >
                     <IoMdAdd />
                     <span className="sparkle-container">

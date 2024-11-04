@@ -3,6 +3,7 @@ import { MdDownloadForOffline } from 'react-icons/md';
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import { AiTwotoneDelete } from "react-icons/ai";
+import { toast } from 'react-toastify';
 
 
 import { clientRead, clientWrite, urlFor } from "../client";
@@ -83,7 +84,12 @@ const PinDetails = ({ user }) => {
 
     const savePin = (id) => {
         console.log("PINNED OR NOT", alreadySaved)
-        if (!user) return; // Add early return if no user
+        if (!user) {
+            toast.error('Please login to pin posts to your profile.\n\n(See the buttons in the top right or bottom left corners.)', {
+                style: { whiteSpace: 'pre-line' }
+            });
+            return; // Add early return if no user
+        }
 
         if (!alreadySaved) {
             // update doc on sanity db
@@ -129,7 +135,7 @@ const PinDetails = ({ user }) => {
 
     // @crucial this is not the same user object as the one Pin.jsx has. That is from localStorage, this is from Sanity.
     // they have different fields. See NOTES point 12.
-    if (!user) return <Spinner message="Loading user data..." />;
+    //if (!user) return <Spinner message="Loading user data..." />;
     // @crucial if PinDetails have not been fetched yet, display a spinner
     if (!pinDetails) return <Spinner message="Loading pin..." />
 

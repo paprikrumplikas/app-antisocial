@@ -1,5 +1,7 @@
 import React from 'react';
-import { NavLink, Link } from 'react-router-dom';
+import { NavLink, Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+
 
 import { RiHomeFill } from "react-icons/ri";
 import { IoIosArrowForward, IoMdAdd } from "react-icons/io";
@@ -14,6 +16,7 @@ const isActiveStyle = "flex items-center text-blue-100 px-5 gap-3 font-extrabold
 
 
 const Sidebar = ({ user, closeToggle }) => {
+    const navigate = useNavigate();
 
     /** @learning we want to be able to toggle the sidebar only for mobile for desktop, 
      * we do not pass the closeToggle so this useEffect would not trigger an untoggle 
@@ -29,6 +32,18 @@ const Sidebar = ({ user, closeToggle }) => {
     In this case, the sidebar would indeed be closed when returning to the mobile view, which might not be the expected behavior
     */
     const handleCloseSidebar = () => {
+        if (closeToggle) closeToggle(false);
+    }
+
+    const handleCreatePinClick = (e) => {
+        e.preventDefault();
+        if (!user) {
+            toast.error('Please login to create pins.\n\n(See the buttons in the top right or bottom left corners.)', {
+                style: { whiteSpace: 'pre-line' }
+            });
+            return;
+        }
+        navigate('/create-pin');
         if (closeToggle) closeToggle(false);
     }
 
@@ -62,7 +77,7 @@ const Sidebar = ({ user, closeToggle }) => {
                     <NavLink
                         to="/create-pin"
                         className={({ isActive }) => isActive ? isActiveStyle : isNotActiveStyle}
-                        onClick={handleCloseSidebar}
+                        onClick={handleCreatePinClick}
                     >
                         <IoMdAdd />
                         Create Pin

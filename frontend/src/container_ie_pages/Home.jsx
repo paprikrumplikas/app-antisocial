@@ -8,6 +8,8 @@ import Pins from './Pins';
 import { userQuery } from '../utils/dataQueries';
 import { clientRead } from '../client';
 import logo from "../assets/logo.png";
+import login from "../assets/login.png";
+
 
 import { fetchUser } from '../utils/fetchUser';
 
@@ -76,16 +78,28 @@ export const Home = () => {
                         <img
                             src={logo}
                             alt="logo"
-                            className='w-32'
+                            className='w-[176px]'
                         />
                     </Link>
-                    <Link to={`/user-profile/${user?._id}`}>
-                        <img
-                            src={user?.image}
-                            alt="pfp"
-                            className='w-16 rounded-2xl'
-                        />
-                    </Link>
+
+                    {user ? (
+                        <Link to={`/user-profile/${user?._id}`}>
+                            <img
+                                src={user?.image}
+                                alt="pfp"
+                                className='w-12 rounded-2xl'
+                            />
+                        </Link>
+                    ) : (
+                        <Link to={"/login"}>
+                            <img
+                                src={login}
+                                alt="login"
+                                className='w-11 rounded-lg py-1 pr-1'
+                            />
+                        </Link>
+                    )
+                    }
                 </div>
 
                 {toggleSideBar && (
