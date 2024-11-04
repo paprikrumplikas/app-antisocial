@@ -13,7 +13,7 @@ const Pins = ({ user }) => {
     useEffect(() => {
         const timer = setTimeout(() => {
             setShowBusted(true);
-        }, 50000); // 
+        }, 300000); // 
 
         return () => clearTimeout(timer);
     }, []); // Run once when component mounts

@@ -16,7 +16,6 @@ const Pin = ({ pin: { postedBy, image, _id, destination, save } }) => {
     const navigate = useNavigate();
 
     const user = fetchUser();
-    console.log("user object fetched from localsotrage looks like this: ", user);
 
     // e save is different than download. Save is like saving to own dashboard
     // the last ? is needed as if noone saved it yet, save will be null / undefined
