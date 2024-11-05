@@ -39,7 +39,7 @@ const Sidebar = ({ user, closeToggle }) => {
         e.preventDefault();
         if (!user) {
             toast.error('Please login to create pins.\n\n(See the buttons in the top right or bottom left corners.)', {
-                style: { whiteSpace: 'pre-line' }
+                style: { whiteSpace: 'pre-line', textAlign: 'center' }
             });
             return;
         }

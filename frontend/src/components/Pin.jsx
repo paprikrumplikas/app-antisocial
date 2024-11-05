@@ -37,7 +37,7 @@ const Pin = ({ pin: { postedBy, image, _id, destination, save } }) => {
     const savePin = async (id) => {
         if (!user) {
             toast.error('Please login to pin posts to your profile.\n\n(See the buttons in the top right or bottom left corners.)', {
-                style: { whiteSpace: 'pre-line' }
+                style: { whiteSpace: 'pre-line', textAlign: 'center' }
             });
             return; // Add early return if no user
         }

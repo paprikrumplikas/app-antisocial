@@ -7,7 +7,7 @@ const Busted = ({ onClose }) => {
             <div className='bg-blue-100 rounded-lg p-8 max-w-md relative'>
                 <button
                     onClick={onClose}
-                    className='absolute top-2 right-2 text-gray-500 hover:text-gray-700'
+                    className='absolute top-2 right-2 text-gray-800 hover:text-gray-950'
                 >
                     ✕
                 </button>

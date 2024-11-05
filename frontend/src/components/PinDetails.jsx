@@ -35,6 +35,13 @@ const PinDetails = ({ user }) => {
     }, [pinDetails]); // Update when pinDetails changes as this might affect image container height
 
     const addComment = () => {
+        if (!user) {
+            toast.error('Please login to leave a comment.\n\n(See the buttons in the top right or bottom left corners.)', {
+                style: { whiteSpace: 'pre-line', textAlign: 'center' }
+
+            });
+            return;
+        }
         if (comment) {
             setAddingComment(true);
 
@@ -86,7 +93,10 @@ const PinDetails = ({ user }) => {
         console.log("PINNED OR NOT", alreadySaved)
         if (!user) {
             toast.error('Please login to pin posts to your profile.\n\n(See the buttons in the top right or bottom left corners.)', {
-                style: { whiteSpace: 'pre-line' }
+                style: {
+                    whiteSpace: 'pre-line', textAlign: 'center'
+                }
+
             });
             return; // Add early return if no user
         }
