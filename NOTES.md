@@ -142,3 +142,19 @@ Merge them when needed (as shown above)
 Be consistent about which ID you use where
 This gives you both security and performance while maintaining data consistency.
 
+
+13. @crucial @bug fix:
+Bug: 404 error on deployed app when reloading pages except for home.
+Reason: The problem occurs because your server is not configured to handle client-side routes properly when users directly access URLs or refresh the page.
+Fix (for Vite, Hostinger (apache))
+
+For a Vite app deployed on Hostinger, you'll need to add a rewrite rule in your .htaccess file since Hostinger uses Apache. Here's how to fix it:
+First, create a .htaccess file in your project's public directory (create the directory if it doesn't exist):
+.htaccess
+Update your vite.config.js to ensure the .htaccess file gets copied to your build directory:
+vite.config.js
+Apply to vite.config.js
+After making these changes:
+Rebuild your project (npm run build)
+Upload the entire contents of your dist directory to Hostinger
+
