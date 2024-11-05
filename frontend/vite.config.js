@@ -8,6 +8,10 @@ export default defineConfig({
     host: 'localhost',
     port: 5173,
   },
+  build: {
+    // ... other build options ...
+    copyPublicDir: true,
+  },
   resolve: {
     alias: {
       'source-map-js': 'source-map-js/source-map.js',
