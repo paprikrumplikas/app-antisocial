@@ -88,7 +88,7 @@ const Pin = ({ pin: { postedBy, image, _id, destination, save } }) => {
                 glareEnable={true}
                 glareMaxOpacity={0.7}              // More visible glare
                 glareColor={"#ffffff"}
-                glareBorderRadius="30px"          // Rounded corners on the glare
+                glareBorderRadius="12px"          // Rounded corners on the glare
                 gyroscope={true}
                 perspective={1000}                  // Stronger perspective effect
                 transitionSpeed={2000}             // Slower transition for more dramatic effect
