@@ -19,6 +19,7 @@
     "react-icons": "^5.3.0",
     "react-loader-spinner": "^6.1.6",
     "react-masonry-css": "^1.0.16",
+    "react-parallax-tilt": "^1.7.252",
     "react-router-dom": "^6.26.2",
     "react-sparkle": "^2.0.0",
     "react-toastify": "^10.0.6",
